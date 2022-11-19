@@ -49,6 +49,18 @@ class CoinResource(Resource):
 class Upgrade:
     pass
 
+class Level:
+    """
+    Level
+    a level
+    """
+    def __init__(self, number = 0, name = "Level name"):
+        """
+        Init
+        """
+        self.number = number
+        self.name = name   
+
 class Player:
     """
     Player
@@ -100,7 +112,7 @@ class GameEngine:
         win = r >= difficulty
         print("| level {:2d}".format(level), "| difficulty", "{:.2f}".format(difficulty), "| result: ", "{:.3f}".format(r), "| win: ", win, " |")
         if win:
-            player.clear_level()        
+            player.clear_level()
         return win
 
 class Simulator:
@@ -170,18 +182,22 @@ def main(argv=None):
         return 2
 
     player = Player("player one")
+    #txt = "Level {}"
+    #levels = [Level(number = i, name = txt.format(i)) for i in range(1,11)]
+    
     game_engine = GameEngine()
-    print("== ", player.name, " plays levels 1 to 10 ==")
+    print("== ", player.name, "plays levels 1 to 10 ==")
     # player plays levels 1 to 10
     for level in range(1, 11):
         game_engine.play_level(player, level)
 
     simulator = Simulator(game_engine)
     player.reset()
-    print()
-    print("== ", player.name, " plays levels x turns ==")
-    # player plays x turns while needing to unlock levels
     turns = 10
+    print()
+    print("== ", player.name, "plays", turns, "turns ==")
+    # player plays x turns while needing to unlock levels
+
     simulator.play_x_turns(player, turns)
     print()
     print(player.name, "cleared", player.cleared_levels, "levels in", turns, "turns.")
